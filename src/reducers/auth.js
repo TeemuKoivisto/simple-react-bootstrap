@@ -15,10 +15,7 @@ export default function (state: Object = INITIAL_STATE, action: Object) {
         user: action.payload.user,
         token: action.payload.token,
         expires: action.payload.expires,
-        loading: false
       })
-    // case LOG_IN + '_FAIL':
-    //   return state.setIn(["loading"], false)
     default:
       return state
   }

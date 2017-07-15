@@ -6,9 +6,23 @@ import { connect } from 'react-redux'
 import { logIn, logOut } from '../../actions/auth'
 
 class FrontPage extends Component {
+  state = {
+    logInLoading: false
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.user) {
+      this.setState({
+        logInLoading: false
+      })      
+    }
+  }
 
   logIn = () => {
     this.props.logIn('admin@asdf.asdf', 'asdf')
+    this.setState({
+      logInLoading: true
+    })
   }
 
   logOut = () => {
@@ -26,10 +40,13 @@ class FrontPage extends Component {
         <p className="FrontPage-intro">
           To get started, edit <code>src/FrontPage.js</code> and save to reload.
         </p>
-        { user ?
-        <button onClick={this.logOut}>Log out</button>
-          :
-        <button onClick={this.logIn}>Log in</button>
+        { this.state.logInLoading ?
+          <p>Loading...</p>
+            :
+          user ?
+          <button onClick={this.logOut}>Log out</button>
+            :
+          <button onClick={this.logIn}>Log in</button>
         }
         <p>
           { user ? `Hello ${user.get('firstname')} ${user.get('lastname')}` : "" }
