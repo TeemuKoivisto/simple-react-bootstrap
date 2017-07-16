@@ -6,6 +6,8 @@ import { fromJS, Map } from 'immutable'
 import rootReducer from './reducers'
 import rootSaga from './sagas'
 
+import { windowReload } from './actions/window'
+
 const immutableStoreConfig = {
   slicer: paths => state => (paths ? state.filter((v, k) => paths.indexOf(k) > -1) : state),
   serialize: subset => JSON.stringify(subset.toJS()),
@@ -29,12 +31,18 @@ const configureStore = () => {
 
   sagaMiddleware.run(rootSaga)
 
+
   if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
     module.hot.accept('./reducers', () => {
-      const nextRootReducer = require('./reducers').default
-      store.replaceReducer(nextRootReducer)
+      store.replaceReducer(rootReducer)
     })
+  }
+
+  /**
+   * Creates an action on every window reload to reset 'loading' variables etc.
+   */
+  window.onbeforeunload = function (e) {
+    store.dispatch(windowReload())
   }
 
   return store

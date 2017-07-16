@@ -39,7 +39,7 @@ class NavBarContainer extends Component {
                 <li><a href="https://twitter.com"><i className="fa fa-twitter-square large"></i></a></li>
                 <li><a href="https://www.facebook.com"><i className="fa fa-facebook-square large"></i></a></li>
                 <li></li>
-                <li><a className="" href="#/login">Log in</a></li>
+                <li><Link to="/login">Log in</Link></li>
               </ul>
             </div>
           </div>

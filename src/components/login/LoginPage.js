@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
-import './FrontPage.css'
 
 import { connect } from 'react-redux'
-import { logIn, logOut } from '../../actions/auth'
+import { logIn } from '../../actions/auth'
 
-class FrontPage extends Component {
+class LoginPage extends Component {
 
   logIn = () => {
     this.props.logIn('admin@asdf.asdf', 'asdf')
@@ -18,19 +16,10 @@ class FrontPage extends Component {
   render() {
     const { user, loginState } = this.props
     return (
-      <div className="FrontPage">
-        <div className="FrontPage-header">
-          <img src={logo} className="FrontPage-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="FrontPage-intro">
-          To get started, edit <code>src/FrontPage.js</code> and save to reload.
-        </p>
+      <div>
+        <h1>Log in</h1>
         { loginState === 'request' ?
           <p>Loading...</p>
-            :
-          user ?
-          <button onClick={this.logOut}>Log out</button>
             :
           <button onClick={this.logIn}>Log in</button>
         }
@@ -57,9 +46,6 @@ const mapDispatchToProps = (dispatch) => ({
       password
     }))
   },
-  logOut() {
-    dispatch(logOut())
-  }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(FrontPage)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)
